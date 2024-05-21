@@ -1,16 +1,10 @@
-from django.db.models.functions import Trim
-from rest_framework import status
-from rest_framework.response import Response
-from rest_framework.views import APIView
 
-from .bibTexSerializers import BibTexSerializer
-from .models import BibText, User, Scientist
 from .ScientistsSerializer import RegisterSerializer, ScientistDetailSerializer, ScientistUpdateSerializer
 
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import Scientist  # Ensure the model is imported
+from .models import Scientist
 
 
 class ScientistRegistrationAPIView(APIView):
@@ -18,7 +12,6 @@ class ScientistRegistrationAPIView(APIView):
         serializer = RegisterSerializer(data=request.data)
         if serializer.is_valid():
             scientist = serializer.save()
-            # Extracting serializable data from the Scientist object
             response_data = {
                 "message": "Scientist registered successfully",
                 "username": scientist.username,
@@ -30,7 +23,6 @@ class ScientistRegistrationAPIView(APIView):
             }
             return Response(response_data, status=status.HTTP_201_CREATED)
 
-        # Print the errors for debugging purposes
         print(serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

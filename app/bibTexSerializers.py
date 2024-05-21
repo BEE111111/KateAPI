@@ -12,7 +12,7 @@ class BibTexSerializer(serializers.ModelSerializer):
         fields = ('bibtex', 'username')
 
     def to_representation(self, instance):
-        # This method defines how to display the object when retrieved
+
         return {
             'id': instance.id,
             'doi': instance.doi,
@@ -112,7 +112,7 @@ class BibTexSerializer(serializers.ModelSerializer):
 
 
 class BibTexUpdateSerializer(serializers.ModelSerializer):
-    # Setting all other fields to allow blank but not doi and url
+
     booktitle = serializers.CharField(required=False, allow_blank=True)
     number = serializers.CharField(required=False, allow_blank=True)
     author_in_russian = serializers.CharField(required=False, allow_blank=True)
@@ -122,8 +122,8 @@ class BibTexUpdateSerializer(serializers.ModelSerializer):
     relations = serializers.CharField(required=False, allow_blank=True)
     number_of_theme = serializers.CharField(required=False, allow_blank=True)
     gratitude = serializers.CharField(required=False, allow_blank=True)
-    doi = serializers.CharField(required=True, allow_blank=False)  # Ensuring DOI cannot be blank
-    url = serializers.CharField(required=True, allow_blank=False)  # Ensuring URL cannot be blank
+    doi = serializers.CharField(required=True, allow_blank=False)
+    url = serializers.CharField(required=True, allow_blank=False)
     username = serializers.CharField(required=False, allow_blank=True)
     year = serializers.IntegerField(required=False)
     month = serializers.CharField(required=False, allow_blank=True)
@@ -172,14 +172,12 @@ class BibTexUpdateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BibText
-        fields = '__all__'  # Include all fields to allow updating any of them
+        fields = '__all__'
 
     def update(self, instance, validated_data):
-        # Update each field from the validated data
+
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
-
-        # Automatically set 'checked' to True (1) whenever an update is made
-        instance.checked = 1  # Ensure that 'checked' is explicitly set to 1
+        instance.checked = 1
         instance.save()
         return instance

@@ -62,7 +62,6 @@ class BibTexByDOIView(APIView):
 
 class AuthorListView(APIView):
     def get(self, request):
-        # Fetch distinct authors
         authors = BibText.objects.values_list('author', flat=True).distinct().order_by('author')
         return Response({'authors': list(authors)}, status=status.HTTP_200_OK)
 
@@ -94,5 +93,5 @@ class BibTexUploadAndCheckView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
-            print(serializer.errors)  # Add this line to see what the errors are
+            print(serializer.errors)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -2,9 +2,6 @@ from django.db.models.functions import Trim
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
-from .bibTexSerializers import BibTexSerializer
-from .models import BibText, User
 from .userSerializers import RegisterSerializer, LoginSerializer
 
 
