@@ -26,7 +26,6 @@ class BibTexListView(APIView):
 
 class BibTexByAuthorListView(APIView):
     def get(self, request, author_name):
-        # Trimming whitespace and using case-insensitive matching
         bibtex_entries = BibText.objects.annotate(
             trimmed_author=Trim('author')
         ).filter(trimmed_author__iexact=author_name.strip())
